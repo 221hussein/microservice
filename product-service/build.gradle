@@ -1,0 +1,51 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.17'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'maven-publish'
+}
+
+group = 'com.hussein'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	//compile 'commons-lang:commons-lang:2.3'
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'com.github.silaev:mongodb-replica-set:0.4.3'
+	implementation 'com.github.silaev:mongodb-replica-set:0.4.3'
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//installing test container
+	implementation platform('org.testcontainers:testcontainers-bom:1.19.1') //import bom
+	testImplementation('org.testcontainers:mysql') //no version specified
+
+	//adding test container
+	testImplementation "org.testcontainers:mongodb:1.19.1"
+
+	//adding junit jupiter dependencies test container
+	testImplementation "org.testcontainers:junit-jupiter:1.19.1"
+
+//	testCompile("com.github.silaev:mongodb-replica-set:0.4.3")
+}
+
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
